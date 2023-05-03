@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bakery Online Order Website</title>
+  <link href="./css/swap2.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="header">
+    <img class="logo"
+      src="https://images.unsplash.com/photo-1622896784083-cc051313dbab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
+      alt="Bakery" />
+    <div>
+      <h1>Luilson Bakery Online Order!</h1>
+      <p>
+        Please select your cake and fill out the form below to place your
+        order.
+      </p>
+    </div>
+    <div></div>
+  </div>
+  <main>
+    <h3>Cake Options</h3>
+    <div class="cakes">
+      <article id="Chocolate" class="Chocolate">
+        <img class="flavourimg"
+        src="https://i0.wp.com/scientificallysweet.com/wp-content/uploads/2020/09/IMG_4087-er-2023.jpg?resize=815%2C1024&ssl=1" />
+        <h2 class="flavour">
+          <a href="../swap2/swap2.html">Chocolate $ 20</a>
+        </h2>
+      </article>
+
+      <article id="Vanilla" class="Vanilla">
+        <img class="flavourimg"
+        src="https://veenaazmanov.com/wp-content/uploads/2019/09/Homemade-Vanilla-Birthday-Cake30.jpg" />
+        <h2 class="flavour">
+          <a href="../swap2/swap2.html">Vanilla $ 25</a>
+        </h2>
+      </article>
+
+      <article id="Red Velvet" class="Red Velvet">
+        <img class="flavourimg"
+        src="https://preppykitchen.com/wp-content/uploads/2022/07/Red-Velvet-Recipe-Card-1a-500x500.jpg" />
+        <h2 class="flavour">
+          <a href="../swap2/swap2.html">Red Velvet $ 30</a>
+        </h2>
+      </article>
+    </div>
+  </main>
+  <article>
+    <h3>Order</h3>
+    <form action="" onsubmit="submit_order(); return false">
+      <div class="order-summary-grid">
+        <div class="order-information">
+          <h3>Order Information</h3>
+          <div>
+            <input type="text" name="name" id="name" placeholder="Customer's Name" required />
+          </div>
+          <div>
+            <select name="cake" id="cake" placeholder="Cake Selected" required>
+              <option value="" disabled selected>Cake Selected</option>
+              <option value="Chocolate">Chocolate</option>
+              <option value="Vanilla">Vanilla</option>
+              <option value="Red Velvet">Red Velvet</option>
+            </select>
+          </div>
+          <div class="date-section">
+            <label for="date" id="date-label">Pick up date</label>
+          </div>
+          <div>
+            <input type="date" name="date" id="date" required />
+          </div>
+          <div>
+            <button type="button" onclick="calculate_cake()">Calculate</button>
+          </div>
+        </div>
+        <div class="order-summary">
+          <div id="order-summary">
+            <h3>Order Summary</h3>
+            <p>Price before taxes: $<span id="price"></span></p>
+            <p>Tax (13%): $<span id="tax"></span></p>
+            <p>Total Price after taxes: $<span id="total-price"></span></p>
+            <p id="thank-you"></p>
+          </div>
+          <div>
+            <button type="submit">Submit</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </article>  
+  </article>  
+  <script type="text/javascript">
+    function calculate_cake() {
+      // Validate the fields 
+      const name = document.getElementById("name");
+      const cake = document.getElementById("cake");
+      const date = document.getElementById("date");
+      let valid = true;
+
+      if (name.value.trim() === "") {
+        name.classList.add("invalid");
+        valid = false;
+      } else {
+        name.classList.remove("invalid");
+      }
+
+      if (cake.value === "") {
+        cake.classList.add("invalid");
+        valid = false;
+      } else {
+        cake.classList.remove("invalid");
+      }
+
+      if (date.value.trim() === "") {
+        date.classList.add("invalid");
+        valid = false;
+      } else {
+        date.classList.remove("invalid");
+      }
+
+      if (valid) {
+        var selected_date = document.getElementById("date").value;
+        selected_date = new Date(selected_date);
+
+        const localtime = new Date();
+        if (selected_date > localtime) {
+          const cake_prices = {
+            "Chocolate": 20.00,
+            "Vanilla": 25.00,
+            "Red Velvet": 30.00
+          }
+
+          const selected_cake = document.getElementById("cake").value;
+
+          const selected_cake_price = cake_prices[selected_cake];
+
+          const price = document.getElementById("price");
+          const tax = document.getElementById("tax");
+          const total = document.getElementById("total-price");
+
+          price.innerHTML = selected_cake_price.toFixed(2);
+          tax.innerHTML = (selected_cake_price * 0.13).toFixed(2);
+          total.innerHTML = (selected_cake_price * 1.13).toFixed(2);
+        } else {
+          const date_label = document.getElementById("date-label");
+          date_label.style.color = "red";
+        }      
+      }
+    }
+
+    function submit_order() {
+      alert("Order submitted successfully! Thank you!")
+    }
+
+  </script>
+</body>
+
+</html>
